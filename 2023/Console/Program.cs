@@ -1,4 +1,4 @@
-﻿var instance = new Code.Day_002.CubeConundrum();
+﻿var instance = new Code.Day_003.GearRatios();
 
 Console.WriteLine($"Part A: {instance.Solve_PartA()}");
 
