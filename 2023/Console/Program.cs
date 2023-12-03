@@ -1,4 +1,4 @@
-﻿var instance = new Code.Day_001.Trebuchet();
+﻿var instance = new Code.Day_002.CubeConundrum();
 
 Console.WriteLine($"Part A: {instance.Solve_PartA()}");
 
