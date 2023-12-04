@@ -1,4 +1,4 @@
-﻿var instance = new Code.Day_003.GearRatios();
+﻿var instance = new Code.Day_004.Scratchcards();
 
 Console.WriteLine($"Part A: {instance.Solve_PartA()}");
 
