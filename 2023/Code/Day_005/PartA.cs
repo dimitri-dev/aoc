@@ -6,7 +6,7 @@ public partial class IfYouGiveASeedAFertilizer
 {
     private class Mapping()
     {
-        public List<Range> Ranges { get; set; } = new();
+        public List<MapRange> Ranges { get; set; } = new();
         public long GetDestination(long value)
         {
             var foundRange = Ranges.FirstOrDefault(range =>
@@ -21,15 +21,26 @@ public partial class IfYouGiveASeedAFertilizer
         }    
     }
     
-    private record class Range(long sourceStartRange, long destinationStartRange, long offset);
+    private record class MapRange(long sourceStartRange, long destinationStartRange, long offset);
     
-    private readonly Mapping _seedToSoil = new();
-    private readonly Mapping _soilToFertilizer = new();
-    private readonly Mapping _fertilizerToWater = new();
-    private readonly Mapping _waterToLight = new();
-    private readonly Mapping _lightToTemperature = new();
-    private readonly Mapping _temperatureToHumidity = new();
-    private readonly Mapping _humidityToLocation = new();
+    private Mapping _seedToSoil = new();
+    private Mapping _soilToFertilizer = new();
+    private Mapping _fertilizerToWater = new();
+    private Mapping _waterToLight = new();
+    private Mapping _lightToTemperature = new();
+    private Mapping _temperatureToHumidity = new();
+    private Mapping _humidityToLocation = new();
+
+    public void ResetMapping()
+    {
+         _seedToSoil = new();
+         _soilToFertilizer = new();
+         _fertilizerToWater = new();
+         _waterToLight = new();
+         _lightToTemperature = new();
+         _temperatureToHumidity = new();
+         _humidityToLocation = new();
+    }
     
     private Mapping GetRangeDirectory(string map) => map switch
     {
@@ -84,7 +95,8 @@ public partial class IfYouGiveASeedAFertilizer
     public long Solve_PartA(string inputPath = "Inputs/005.in")
     {
         var lines = File.ReadAllLines(inputPath);
-        
+
+        ResetMapping();
         Internal_PartA_SetupMap(lines.Skip(1));
 
         var seedNumbers = lines.First()
