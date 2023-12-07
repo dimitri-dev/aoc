@@ -1,5 +1,7 @@
-﻿var instance = new Code.Day_006.WaitForIt();
+﻿var instance = new Code.Day_007.CamelCards();
 
-Console.WriteLine($"Part A: {instance.Solve_PartA("Inputs/006.in")}");
+Console.WriteLine($"Test A: {instance.Solve_PartA("Inputs/007.test.in")}");
+Console.WriteLine($"Part A: {instance.Solve_PartA("Inputs/007.in")}");
 
-Console.WriteLine($"Part B: {instance.Solve_PartB("Inputs/006.in")}");
+Console.WriteLine($"Test B: {instance.Solve_PartB("Inputs/007.test.in")}");
+Console.WriteLine($"Part B: {instance.Solve_PartB("Inputs/007.in")}");
