@@ -40,7 +40,7 @@ public partial class HauntedWasteland
         return steps;
     }
     
-    public long Solve_PartA(string inputPath = "Inputs/007.in")
+    public long Solve_PartA(string inputPath = "Inputs/008.in")
     {
         var input = File.ReadAllLines(inputPath);
         var instructions = input[0];
