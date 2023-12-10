@@ -93,6 +93,7 @@ public partial class PipeMaze
     public Point PopulateGridAndGetStart(string[] maze)
     {
         Point start = null;
+        _grid = new();
         
         for (int x = 0; x < maze.Length; ++x)
         {
