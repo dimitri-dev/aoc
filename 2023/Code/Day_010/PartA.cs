@@ -4,7 +4,7 @@ namespace Code.Day_010;
 
 public partial class PipeMaze
 {
-    private readonly Dictionary<Point, char> _grid = new();
+    private Dictionary<Point, char> _grid = new();
     
     public record BFSResults(Dictionary<Point, long> distances, Dictionary<Point, Point> parents, HashSet<Point> visited);
 
