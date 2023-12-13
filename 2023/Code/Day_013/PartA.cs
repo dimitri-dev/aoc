@@ -2,7 +2,7 @@
 
 public partial class PointOfIncidence
 {
-    public long FindMirror(string _map)
+    public long FindMirror(string _map, long? originalResult = null)
     {
         var _mapHorizontal = _map.Split('\n').ToArray();
         
@@ -21,7 +21,11 @@ public partial class PointOfIncidence
 
                 if (a.StartsWith(b) || b.StartsWith(a))
                 {
-                    return  i * mapWeight;
+                    var result = i * mapWeight;
+                    if (result != originalResult)
+                    {
+                        return result;
+                    }
                 }
             }
         }
