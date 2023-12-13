@@ -21,7 +21,7 @@ public partial class HotSprings
     private long GetPossibleArrangements_Cached(string s, int? done, long[] order)
     {
         var hashCode = $"{s}:::{(done.HasValue ? done : "<null>")}:::{string.Join('_', order)}";
-        var result = _cache.GetOrAdd(hashCode, GetPossibleArrangements_PartB(s, done, order));
+        var result = _cache.GetOrAdd(hashCode, (hashCode) => GetPossibleArrangements_PartB(s, done, order));
         return result;
     }
 
