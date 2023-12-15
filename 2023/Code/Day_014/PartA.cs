@@ -39,21 +39,31 @@ public partial class ParabolicReflectorDish
     
     public long Solve_PartA(string inputPath = "Inputs/014.in")
     {
-        var lines = File.ReadAllLines(inputPath);
-        int size = lines.Length;
+        var mapInstance = new MapInstance(File.ReadAllLines(inputPath));
         
-        char[,] map = new char[lines.Length, lines.Length];
-        for (int r = 0; r < lines.Length; r++) 
-        {
-            for (int c = 0; c < lines.Length; c++) 
-            {
-                map[r, c] = lines[r][c];
-            }
-        }
-        
-        RollNorth(map, lines.Length);
-        var result = GetTotalLoad(map, size);
+        RollNorth(mapInstance.Map, mapInstance.Size);
+        var result = GetTotalLoad(mapInstance.Map, mapInstance.Size);
         
         return result;
+    }
+
+    private class MapInstance()
+    {
+        public char[,] Map { get; init; }
+        public int Size { get; init; }
+        
+        public MapInstance(string[] lines) : this()
+        {
+            Size = lines.Length;
+        
+            Map = new char[lines.Length, lines.Length];
+            for (int r = 0; r < lines.Length; r++) 
+            {
+                for (int c = 0; c < lines.Length; c++) 
+                {
+                    Map[r, c] = lines[r][c];
+                }
+            }
+        }
     }
 }
