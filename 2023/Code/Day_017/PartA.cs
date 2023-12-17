@@ -70,12 +70,7 @@ public partial class ClumsyCrucible
     {
         public Position Move(Direction direction)
         {
-            if (direction == Direction.North) return new(x - 1, y);
-            if (direction == Direction.East) return new(x, y + 1);
-            if (direction == Direction.West) return new(x, y - 1);
-            if (direction == Direction.South) return new(x + 1, y);
-
-            return null;
+            return new Position(x + direction.x, y + direction.y);
         }
     }
 
