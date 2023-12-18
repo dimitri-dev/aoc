@@ -1,4 +1,4 @@
-﻿var instance = new Code.Day_017.ClumsyCrucible();
+﻿var instance = new Code.Day_018.LavaductLagoon();
 
 Console.WriteLine($"Part A: {instance.Solve_PartA()}");
 
