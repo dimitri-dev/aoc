@@ -32,10 +32,10 @@ public partial class LavaductLagoon
     {
         public static Direction FromChar(char ch) => ch switch
         {
-            'U' => North,
-            'L' => West,
-            'D' => South,
-            'R' => East,
+            'U' or '3' => North,
+            'L' or '2' => West,
+            'D' or '1' => South,
+            'R' or '0' => East,
             _ => null
         } ?? throw new InvalidOperationException();
         
@@ -45,14 +45,15 @@ public partial class LavaductLagoon
         public static Direction West = new(0, -1);
     }
 
-    public record DigInstruction(Direction Direction, int MoveCount, string HexColor)
+    public record DigInstruction(Direction Direction, long MoveCount, string HexColor)
     {
-        public DigInstruction(string input) : this(null, 0, null)
+        public DigInstruction(string input, bool useHex = false) : this(null, 0, null)
         {
             var inputs = input.Split(' ');
-            this.Direction = Direction.FromChar(inputs[0][0]);
-            this.MoveCount = Int32.Parse(inputs[1]);
-            this.HexColor = inputs[2].Substring(1, inputs[2].Length - 2);
+            this.HexColor = inputs[2].Substring(2, inputs[2].Length - 3);
+            this.MoveCount = useHex ? Convert.ToInt64(this.HexColor[..5], 16) : Int64.Parse(inputs[1]);
+            this.Direction = Direction.FromChar((useHex ? HexColor.Last() : inputs[0][0]));
+            
         }
     }
 }
