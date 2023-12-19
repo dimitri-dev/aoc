@@ -1,4 +1,4 @@
-﻿var instance = new Code.Day_018.LavaductLagoon();
+﻿var instance = new Code.Day_019.Aplenty();
 
 Console.WriteLine($"Part A: {instance.Solve_PartA()}");
 
