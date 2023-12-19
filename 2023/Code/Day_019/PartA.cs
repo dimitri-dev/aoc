@@ -2,7 +2,7 @@
 
 public partial class Aplenty
 {
-    private readonly Dictionary<string, Conditions> _map = new();
+    private Dictionary<string, Conditions> _map = new();
 
     public void ProcessMap(string mapping)
     {
@@ -53,6 +53,8 @@ public partial class Aplenty
     
     public long Solve_PartA(string inputPath = "Inputs/019.in")
     {
+        _map = new();
+        
         var lines = string.Join("\n", File.ReadAllLines(inputPath)).Split("\n\n");
 
         ProcessMap(lines.First());
@@ -65,6 +67,8 @@ public partial class Aplenty
     public record Conditions
     {
         private readonly List<Condition> _conditions = new();
+
+        public List<Condition> List => _conditions.ToList();
 
         public string EvaluateXmas(long x, long m, long a, long s)
         {
