@@ -1,4 +1,4 @@
-﻿var instance = new Code.Day_020.PulsePropagation();
+﻿var instance = new Code.Day_021.StepCounter();
 
 Console.WriteLine($"Part A: {instance.Solve_PartA()}");
 
