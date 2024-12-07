@@ -1,8 +1,10 @@
+use std::collections::HashMap;
 use std::fs::File;
 use std::io;
 use std::io::BufRead;
+use std::iter::zip;
 
-pub(crate) fn result(file_path: &str) {
+pub fn result(file_path: &str) {
     let mut vec1: Vec<i64> = Vec::new();
     let mut vec2: Vec<i64> = Vec::new();
 
@@ -34,10 +36,14 @@ pub(crate) fn result(file_path: &str) {
     vec2.sort();
 
     let mut p1: i64 = 0;
+    let mut similarity_map: HashMap<i64, i64> = HashMap::new();
 
-    for i in 0..vec1.len() {
-        p1 += (vec1[i] - vec2[i]).abs();
-    }
+    zip(vec1.iter(), vec2.iter())
+        .for_each(|(a, b)| {
+            p1 += (a - b).abs();
+            similarity_map.entry(*a).or_insert(a * vec1.iter().filter(|&x| *x == *a).count() as i64 * vec2.iter().filter(|&x| *x == *a).count() as i64);
+        });
 
     println!("Day 1 Part 1: {}", p1);
+    println!("Day 1 Part 2: {}", similarity_map.values().sum::<i64>());
 }
