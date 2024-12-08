@@ -4,7 +4,7 @@ use std::io;
 use std::io::BufRead;
 use std::iter::zip;
 
-pub fn result(file_path: &str) {
+pub fn result(file_path: &str) -> (String, String)  {
     let mut vec1: Vec<i64> = Vec::new();
     let mut vec2: Vec<i64> = Vec::new();
 
@@ -12,7 +12,7 @@ pub fn result(file_path: &str) {
 
     if file.is_err() {
         eprintln!("Error: File not found");
-        return;
+        return ("".to_string(), "".to_string());
     }
 
     let reader = io::BufReader::new(file.unwrap());
@@ -44,6 +44,5 @@ pub fn result(file_path: &str) {
             similarity_map.entry(*a).or_insert(a * vec1.iter().filter(|&x| *x == *a).count() as i64 * vec2.iter().filter(|&x| *x == *a).count() as i64);
         });
 
-    println!("Day 1 Part 1: {}", p1);
-    println!("Day 1 Part 2: {}", similarity_map.values().sum::<i64>());
+    (p1.to_string(), similarity_map.values().sum::<i64>().to_string())
 }
