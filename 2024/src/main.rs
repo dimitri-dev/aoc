@@ -1,7 +1,7 @@
-mod day2;
+mod day3;
 
 fn main() {
-    let result = day2::result("inputs/day2.in");
+    let result = day3::result("inputs/day3.in");
 
     println!("Part 1: {}", result.0);
     println!("Part 2: {}", result.1);
