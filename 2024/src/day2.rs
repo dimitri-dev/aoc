@@ -13,6 +13,7 @@ pub fn result(file_path: &str) -> (String, String) {
     let reader = io::BufReader::new(file.unwrap());
 
     let mut safe_reports = 0;
+    let mut safe_reports_2 = 0;
 
     for line in reader.lines() {
         let line = line.unwrap();
@@ -21,9 +22,24 @@ pub fn result(file_path: &str) -> (String, String) {
             .collect();
 
         safe_reports += if is_safe(&nums) {1} else {0};
+        safe_reports_2 += if is_safe_extended(&nums, 0) {1} else {0};
     }
 
-    (safe_reports.to_string(), "".to_string())
+    (safe_reports.to_string(), safe_reports_2.to_string())
+}
+
+pub fn without_elem(nums: &Vec<i64>, idx: usize) -> Vec<i64> {
+    let mut vec = nums.clone();
+    vec.remove(idx);
+    vec
+}
+
+pub fn is_safe_extended(nums: &Vec<i64>, idx: usize) -> bool {
+    if idx >= nums.len() {
+        return false;
+    }
+
+    is_safe(&without_elem(nums, idx)) || is_safe_extended(nums, idx + 1)
 }
 
 pub fn is_safe(nums: &Vec<i64>) -> bool {
