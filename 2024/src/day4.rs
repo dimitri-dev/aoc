@@ -20,15 +20,29 @@ pub fn result(file_path: &str) -> (String, String) {
     }
 
     let mut xmas_count = 0;
+    let mut mas_as_x_count = 0;
+
     for i in 0..board.len() {
         for j in 0..board[i].len() {
             if board[i][j] == 'X' {
-                xmas_count += find_xmas(&board, (i, j))
+                xmas_count += find_xmas(&board, (i, j));
+                continue
             }
+
+            if board[i][j] != 'A' || !(i > 0 && i + 1 < board.len() && j > 0 && j + 1 < board[i].len()) {
+                continue
+            }
+
+            let diag1 = board[i - 1][j - 1] == 'M' && board[i + 1][j + 1] == 'S';
+            let diag1_reverse = board[i - 1][j - 1] == 'S' && board[i + 1][j + 1] == 'M';
+            let diag2 = board[i - 1][j + 1] == 'M' && board[i + 1][j - 1] == 'S';
+            let diag2_reverse = board[i - 1][j + 1] == 'S' && board[i + 1][j - 1] == 'M';
+
+            mas_as_x_count += if (diag1 || diag1_reverse) && (diag2 || diag2_reverse) {1} else {0};
         }
     }
 
-    (xmas_count.to_string(), "".to_string())
+    (xmas_count.to_string(), mas_as_x_count.to_string())
 }
 
 pub fn find_xmas(board: &Vec<Vec<char>>, (i, j): (usize, usize)) -> i32 {
