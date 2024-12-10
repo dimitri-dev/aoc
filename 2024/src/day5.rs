@@ -1,3 +1,4 @@
+use std::cmp::Ordering;
 use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io;
@@ -37,24 +38,50 @@ pub fn result(file_path: &str) -> (String, String) {
     }
 
     let sum = updates.iter()
-        .filter(|x| {
-            let mut block: HashSet<i32> = HashSet::new();
+        .filter(|x| is_ordered(x, &reversed_page_ordering_rules))
+        .map(|x| x.get((x.iter().count() - 1) / 2).unwrap())
+        .sum::<i32>();
 
-            for num in *x {
-                if block.contains(&num) {
-                    return false
+    let sum2 = updates.iter_mut()
+        .filter(|x| !is_ordered(&&**x, &reversed_page_ordering_rules))
+        .map(|mut x| {
+            x.sort_by(|a, b| {
+                if let Some(ruleA) = page_ordering_rules.get(a) {
+                    if ruleA.contains(b) {
+                        return Ordering::Less;
+                    }
                 }
 
-                let future =reversed_page_ordering_rules.entry(*num).or_default();
-                if !future.is_empty() {
-                    block = block.union(&future).cloned().collect();
+                if let Some(ruleB) = page_ordering_rules.get(b) {
+                    if ruleB.contains(a) {
+                        return Ordering::Greater;
+                    }
                 }
-            }
 
-            true
+                Ordering::Equal
+            });
+
+            x
         })
         .map(|x| x.get((x.iter().count() - 1) / 2).unwrap())
         .sum::<i32>();
 
-    (sum.to_string(), "".to_string())
+    (sum.to_string(), sum2.to_string())
+}
+
+pub fn is_ordered(x: &&Vec<i32>, reversed_page_ordering_rules: &HashMap<i32, HashSet<i32>>) -> bool {
+    let mut block: HashSet<i32> = HashSet::new();
+
+    for num in *x {
+        if block.contains(&num) {
+            return false
+        }
+
+        if reversed_page_ordering_rules.contains_key(num) {
+            let future = reversed_page_ordering_rules.get(num).unwrap();
+            block = block.union(future).cloned().collect();
+        }
+    }
+
+    true
 }
